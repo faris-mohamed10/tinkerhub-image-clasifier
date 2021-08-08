@@ -7,11 +7,9 @@ app = Flask(__name__)
 cors = CORS(app)
 
 
-@app.route("/")
-def main():
-    return """
-        Application is working
-    """
+@app.route('/')
+def home():
+    return render_template('form.html', title='Home')
 
 
 @app.route("/predict", methods=["POST"])
@@ -21,6 +19,7 @@ def processReq():
 
     resp = processImg("img.jpg")
 
-    print(resp)
+    text = "it is a <b>"+resp['label'] + \
+        "</b> with confidence <b>"+resp['confidence']+"</b>"
 
-    return jsonify(resp)
+    return text
